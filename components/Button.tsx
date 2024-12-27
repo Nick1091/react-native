@@ -39,7 +39,11 @@ export default function Button({
   if (theme === 'primary') {
     const baseStyle = [styles.button, { borderColor }];
     return (
-      <Pressable style={(state) =>  getButtonStyle(state, baseStyle)} onPress={onPress}>
+      <Pressable
+        testID="button"
+        style={(state) => getButtonStyle(state, baseStyle)}
+        onPress={onPress}
+      >
         <Text style={[styles.buttonLabel]}>{label}</Text>
       </Pressable>
     );
@@ -48,7 +52,11 @@ export default function Button({
   if (theme === 'secondary') {
     const baseStyle = [styles.buttonSecondary];
     return (
-      <Pressable style={(state) => getButtonStyle(state, baseStyle)} onPress={onPress}>
+      <Pressable
+        testID='button'
+        style={(state) => getButtonStyle(state, baseStyle)}
+        onPress={onPress}
+      >
         <Text style={[styles.buttonLabel]}>{label}</Text>
       </Pressable>
     );
@@ -58,6 +66,7 @@ export default function Button({
   return (
     <View style={styles.buttonContainer}>
       <Pressable
+        testID="button"
         style={(state) => getButtonStyle(state, baseStyle)}
         onPress={onPress}
       >

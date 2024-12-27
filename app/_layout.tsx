@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toast from 'react-native-toast-message';
 import { useCheckAuth } from '@/providers/usecheckAuth';
 
-type ArticleRouteParams = { id: string };
+type ArticleRouteParams = { id: string, title: string; };
 
 SplashScreen.preventAutoHideAsync();
 
@@ -98,8 +98,8 @@ export default function RootLayout() {
               <Stack.Screen
                 name="articles/[id]"
                 options={({ route }) => {
-                  const { id } = route.params as ArticleRouteParams;
-                  return { headerShown: true, title: `Article ${id}` };
+                  const { id, title } = route.params as ArticleRouteParams;
+                  return { headerShown: true, title: title || `Article ${id}` };
                 }}
               />
               <Stack.Screen
@@ -113,13 +113,6 @@ export default function RootLayout() {
                 name="articles/edit/[id]"
                 options={({ route }) => {
                   return { headerShown: true, title: `Edit an article` };
-                }}
-              />
-              <Stack.Screen
-                name="articles/index"
-                options={{
-                  headerShown: true,
-                  title: 'Articles',
                 }}
               />
               <Stack.Screen name="+not-found" />

@@ -25,7 +25,6 @@ export default function EditArticle() {
   const navigation = useNavigation();
   const route = useRoute();
   const { id } = route.params as { id: string };
-  console.log(id);
   const { data: article, error, isLoading } = useGetArticleQuery(id);
 
   useEffect(() => {
@@ -47,9 +46,10 @@ export default function EditArticle() {
     try {
       if(article) {
         await updateArticle({
-          ...article,
-          ...data,
-          userId: article.userUid
+          uid: article.uid,
+          title: data.title,
+          content: data.content,
+          userUid: article.userUid,
         }).unwrap();
         navigation.navigate('index' as never);
         Toast.show({ text1: 'Update successful!' });

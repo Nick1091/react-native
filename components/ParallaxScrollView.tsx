@@ -43,17 +43,24 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <ThemedView style={styles.container}>
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+    <ThemedView style={styles.container} >
+      <Animated.ScrollView
+        ref={scrollRef}
+        scrollEventThrottle={16}
+      >
         <Animated.View
+          
           style={[
             styles.header,
             { backgroundColor: headerBackgroundColor[colorScheme] },
             headerAnimatedStyle,
-          ]}>
+          ]}
+        >
           {headerImage}
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <ThemedView style={styles.content} testID="parallax-scroll-view">
+          {children}
+        </ThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );

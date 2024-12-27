@@ -8,6 +8,6 @@ export interface ArticleDto {
 export interface ArticleUpdateDto extends Partial<Article> {
   title: string;
   content: string;
-  userId: string
+  userUid: string
   uid: string;
 }

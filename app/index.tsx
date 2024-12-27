@@ -1,14 +1,13 @@
-
-import { StyleSheet,View, FlatList, useColorScheme, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, useColorScheme, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ThemedView } from '@/components/ThemedView';
 import { HelloWave } from '@/components/HelloWave';
-import Button from '@/components/Button';
 import { useDeleteMutation, useGetArticlesQuery } from '@/api';
-import { Link, useRouter } from 'expo-router';
+import { Href, Link, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ArticleRouteParams } from '@/components/AppNavigator';
 
 export default function Home() {
   const { data: articles } = useGetArticlesQuery(undefined);
@@ -32,18 +31,28 @@ export default function Home() {
           data={articles || []}
           renderItem={({ item }) => (
             <View style={styles.item}>
-              <Button
-                label={item.title}
-                theme="primary"
-                style={styles.titleButton}
-              />
+              <TouchableOpacity
+                onPress={() =>
+                  router.push(
+                    `/articles/${item.uid}?title=${encodeURIComponent(
+                      item.title
+                    )}` as unknown as Href<ArticleRouteParams>
+                  )
+                }
+              >
+                <ThemedText style={styles.title}>{item.title}</ThemedText>
+              </TouchableOpacity>
               <View style={styles.itemButtons}>
                 <TouchableOpacity
+                  testID={`edit-${item.uid}`}
                   onPress={() => router.push(`/articles/edit/${item.uid}`)}
                 >
                   <MaterialIcons name={'edit'} size={24} color="#181616" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => deleteArticle(item.uid)}>
+                <TouchableOpacity
+                  testID={`delete-${item.uid}`}
+                  onPress={() => deleteArticle(item.uid)}
+                >
                   <MaterialIcons name={'delete'} size={24} color="#181616" />
                 </TouchableOpacity>
               </View>
@@ -54,7 +63,7 @@ export default function Home() {
     </ThemedView>
   );
 }
-    
+
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'column',
@@ -77,6 +86,8 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     alignItems: 'center',
+    fontSize: 18,
+    lineHeight: 20,
   },
   titleButton: {
     maxWidth: '50%',

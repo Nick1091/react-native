@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextInput, StyleSheet, Text, View } from 'react-native';
-import { Control, Controller, FieldErrors, FieldValues, Path, RegisterOptions } from 'react-hook-form';
+import { TextInput, StyleSheet, View } from 'react-native';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 type InputFieldProps<T extends FieldValues> = {
   control: Control<T>;
